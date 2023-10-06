@@ -4,6 +4,7 @@ import {Body, ErrorBoundary, FileRoutes, Head, Html, Meta, Routes, Scripts, Titl
 import "./root.css";
 import {GlobalConextProvider} from "~/globalContext/authStore";
 import {NavBar} from "~/components/NavBar";
+import {Footer} from "~/components/Footer";
 
 export default function Root() {
     return (
@@ -20,11 +21,12 @@ export default function Root() {
                         <ErrorBoundary>
                             <NavBar/>
 
-                            <div class='my-12 mx-auto px-4 md:px-12'>
+                            <div class='my-12 mx-auto px-4 md:px-12 flex flex-col min-h-screen'>
                                 <Routes>
                                     <FileRoutes/>
                                 </Routes>
                             </div>
+                            <Footer/>
                         </ErrorBoundary>
                     </Suspense>
                 </GlobalConextProvider>

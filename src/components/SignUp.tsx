@@ -3,7 +3,7 @@ import supabase from "~/supabase/client";
 import {useGlobalContext} from "~/globalContext/authStore";
 
 export const SignUp: Component = (props) => {
-    const {count, setCount, auth, setAuth} = useGlobalContext()
+    const {auth, setAuth} = useGlobalContext()
 
     const [email, setEmail] = createSignal('')
     const [password, setPassword] = createSignal('')

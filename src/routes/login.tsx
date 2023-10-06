@@ -1,20 +1,18 @@
-import {SignUp} from "~/components/SignUp";
-import {SignUpGit} from "~/components/SignUpGit";
-import {SignIn} from "~/components/SignIn";
-import {useGlobalContext} from "~/globalContext/authStore";
+import {FormLogin} from "~/components/FormLogin";
+import {Motion} from "@motionone/solid";
+import {Title} from "solid-start";
 
 export default function Home() {
-    const {count, setCount, auth, setAuth} = useGlobalContext()
 
     return (
 
-        <main>
-            <h1>LOGIN PLEASE!!</h1>
-            <h1>AUTH: {`${auth()}`}, COUNT: {count()}</h1>
+        <Motion
+            animate={{opacity: [0, .5, 1]}}
+            transition={{duration: 1, x: {offset: [0, 0.25, 1]}}}
 
-            <SignIn/>
-            <SignUp/>
-            <SignUpGit/>
-        </main>
+        >
+            <Title>Login</Title>
+            <FormLogin/>
+        </Motion>
     );
 }

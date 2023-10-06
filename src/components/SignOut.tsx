@@ -2,7 +2,7 @@ import supabase from "~/supabase/client";
 import {useGlobalContext} from "~/globalContext/authStore";
 
 export const SignOut = () => {
-    const {count, setCount, auth, setAuth} = useGlobalContext()
+    const {auth, setAuth} = useGlobalContext()
 
     async function handleClick(event: Event) {
         event.preventDefault()
