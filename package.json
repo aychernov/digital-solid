@@ -24,7 +24,8 @@
     "@solidjs/router": "^0.8.3",
     "@supabase/supabase-js": "^2.37.0",
     "solid-js": "^1.7.12",
-    "solid-start": "^0.3.6"
+    "solid-start": "^0.3.6",
+    "solid-toast": "^0.5.0"
   },
   "engines": {
     "node": ">=18"

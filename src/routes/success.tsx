@@ -1,9 +1,8 @@
-import {FormLogin} from "~/components/FormLogin";
 import {Motion} from "@motionone/solid";
 import {Title} from "solid-start";
+import {A} from "@solidjs/router";
 
-export default function Home() {
-
+export default function Success() {
 
     return (
 
@@ -12,8 +11,9 @@ export default function Home() {
             transition={{duration: 1, x: {offset: [0, 0.25, 1]}}}
 
         >
-            <Title>Login</Title>
-            <FormLogin/>
+            <Title>Success</Title>
+            <h1>Поздравляем, вы зарегистрировались!</h1>
+            <A href={'/'}>Go teach!</A>
         </Motion>
     );
 }
