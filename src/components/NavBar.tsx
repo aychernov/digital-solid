@@ -1,10 +1,28 @@
 import { A } from "@solidjs/router";
 import { createSignal, onMount } from "solid-js";
 import supabase from "~/supabase/client";
-import {Motion} from "@motionone/solid";
+import { useGlobalContext } from '~/globalContext/authStore';
+import { useNavigate } from 'solid-start/router';
 
 export const NavBar = () => {
   const [avatar, setAvatar] = createSignal("");
+  const { auth, setAuth } = useGlobalContext();
+  const navigate = useNavigate()
+
+  async function handleLogout(event: Event) {
+    event.preventDefault()
+    try {
+      const { error } = await supabase.auth.signOut()
+      setAuth(false)
+      navigate('/login')
+
+      if (error) throw error
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+
 
   onMount(async () => {
     try {
@@ -21,15 +39,7 @@ export const NavBar = () => {
       <div class="flex-1">
         <A href='/' class="btn btn-ghost normal-case text-xl">Digital evergarden</A>
       </div>
-      <div class="flex-1">
-        <Motion.a
-            hover={{ scale: 1.1 }}
-        >
-          <A href='/login' class="btn btn-ghost normal-case text-xl">Login</A>
-        </Motion.a>
-      </div>
       <div class="flex-none">
-        \
         <div class="dropdown dropdown-end">
           <label tabindex="0" class="btn btn-ghost btn-circle avatar">
             <div class="w-10 rounded-full">
@@ -40,7 +50,7 @@ export const NavBar = () => {
             tabindex="0"
             class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
           >
-            <li>
+            {/* <li>
               <a class="justify-between">
                 Profile
                 <span class="badge">New</span>
@@ -48,10 +58,11 @@ export const NavBar = () => {
             </li>
             <li>
               <a>Settings</a>
-            </li>
-            <li>
-              <a>Logout</a>
-            </li>
+            </li> */}
+            {auth() ? <li>
+              <a onClick={handleLogout}>Выйти</a>
+            </li> : null}
+
           </ul>
         </div>
       </div>

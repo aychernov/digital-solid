@@ -1,11 +1,11 @@
-import {Component, createSignal} from "solid-js";
+import { Component, createSignal } from "solid-js";
 import supabase from "~/supabase/client";
-import {useGlobalContext} from "~/globalContext/authStore";
-import {useNavigate} from "@solidjs/router";
-import {toast, Toaster} from "solid-toast";
+import { useGlobalContext } from "~/globalContext/authStore";
+import { useNavigate } from "@solidjs/router";
+import { toast, Toaster } from "solid-toast";
 
 export const SignUp: Component = (props) => {
-    const {auth, setAuth} = useGlobalContext()
+    const { auth, setAuth } = useGlobalContext()
 
     const [errorToast, setErrorToast] = createSignal(true)
     const [email, setEmail] = createSignal('')
@@ -29,10 +29,17 @@ export const SignUp: Component = (props) => {
     async function handleSubmit(event: Event) {
         event.preventDefault()
         try {
-            const {error} = await supabase.auth.signUp({
+            const { error } = await supabase.auth.signUp({
                 email: email(),
                 password: password()
+            }).then(() => {
+                supabase.auth.signInWithPassword({
+                    email: email(),
+                    password: password()
+                })
             })
+
+
             if (error) {
                 notify()
                 console.log(error, errorToast())
@@ -46,15 +53,15 @@ export const SignUp: Component = (props) => {
     return (
         <div>
             <h1>SingUp</h1>
-            <Toaster/>
+            <Toaster />
             <form onSubmit={handleSubmit}>
                 <label for="">
                     Email
-                    <input type="email" value={email()} onInput={handleEmailChange}/>
+                    <input type="email" value={email()} onInput={handleEmailChange} />
                 </label>
                 <label for="">
                     Password
-                    <input type="password" value={password()} onInput={handlePasswordChange}/>
+                    <input type="password" value={password()} onInput={handlePasswordChange} />
                 </label>
                 <button class='btn btn-primary ' type='submit'>Sign UP</button>
             </form>

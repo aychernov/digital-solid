@@ -14,4 +14,5 @@ export const PRODUCTS: IProduct[] = [
         description: 'Видео с переводом, доступ к которому вы можете приобрести',
         price: '1 000'
     }
+    
 ]

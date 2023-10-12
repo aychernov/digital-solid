@@ -1,22 +1,21 @@
-import {Title} from "solid-start";
-import {SignOut} from "~/components/SignOut";
-import {createEffect, createSignal} from "solid-js";
+import { Title } from "solid-start";
+import { createEffect, createSignal } from "solid-js";
 import supabase from "~/supabase/client";
-import {useNavigate} from "@solidjs/router";
-import {useGlobalContext} from "~/globalContext/authStore";
-import {ProductCard} from "~/components/ProductCard";
-import {PRODUCTS} from "~/constant";
-import {Motion} from "@motionone/solid";
+import { useNavigate } from "@solidjs/router";
+import { useGlobalContext } from "~/globalContext/authStore";
+import { ProductCard } from "~/components/ProductCard";
+import { PRODUCTS } from "~/constant";
+import { Motion } from "@motionone/solid";
 
 export default function Home() {
-    const {auth, setAuth} = useGlobalContext();
+    const { auth, setAuth } = useGlobalContext();
 
     const navigate = useNavigate();
     const [userName, setUserName] = createSignal("");
 
     createEffect(async () => {
         try {
-            const {data, error} = await supabase.auth.getSession();
+            const { data, error } = await supabase.auth.getSession();
             if (error) throw error;
             if (!data.session?.user) navigate("/login");
             if (data) {
@@ -36,7 +35,7 @@ export default function Home() {
 
 
     async function resetPass() {
-        const {data, error} = await supabase.auth.getSession();
+        const { data, error } = await supabase.auth.getSession();
         await supabase.auth.resetPasswordForEmail(`sashacool75@gmail.com`, {
             redirectTo: "http://localhost:3000/reset-password",
         });
@@ -45,25 +44,23 @@ export default function Home() {
     return (
         <main>
             <Motion
-                animate={{opacity: [0, 50, 1]}}
-                transition={{duration: 1, x: {offset: [0, 0.25, 1]}}}
+                animate={{ opacity: [0, 50, 1] }}
+                transition={{ duration: 1, x: { offset: [0, 0.25, 1] } }}
             >
                 <Title>Home</Title>
-                <h1 class="text-2xl">Hello {userName()}</h1>
-                <h1 class="text-2xl">AUTH: {`${auth()}`}</h1>
+                <h1 class="text-2xl my-10">Привет, {userName()}!</h1>
 
                 {!auth() ? (
                     <button class="btn btn-accent" onClick={resetPass}>
                         Reset pass
                     </button>
                 ) : null}
-                {auth() && <SignOut/>}
 
                 {auth() ? (
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                        {PRODUCTS.length && PRODUCTS.map(({title, image, description, badge, price}) => (
+                        {PRODUCTS.length && PRODUCTS.map(({ title, image, description, badge, price }) => (
                             <ProductCard title={title} image={image} badge={badge} description={description}
-                                         price={price}/>
+                                price={price} />
                         ))}
                     </div>
                 ) : (
